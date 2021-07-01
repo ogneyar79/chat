@@ -11,4 +11,7 @@ public interface IPersonService {
 
     Optional<Person> getById(Long id);
     Person save(Person person);
+
+    Person savePersonWithRole(Person p, Role r);
+
 }

@@ -2,38 +2,51 @@ package ru.job4j.chat.controller;
 
 
 import lombok.RequiredArgsConstructor;
-import org.springframework.http.HttpStatus;
-import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
-import ru.job4j.chat.model.Person;
+import org.springframework.web.bind.annotation.RequestMethod;
 import ru.job4j.chat.services.IPersonService;
 
-import java.util.List;
-import java.util.stream.Collectors;
-import java.util.stream.StreamSupport;
+import java.util.logging.Logger;
 
-@RestController
+@Controller
 @RequiredArgsConstructor
-@RequestMapping("/persons")
+@RequestMapping({"/", "index"})
 public class FirstController {
 
     private final IPersonService serviceP;
+    private static Logger log = Logger.getLogger(FirstController.class.getName());
 
-
-    @GetMapping("/")
-    public List<Person> findAll() {
-        return StreamSupport.stream(this.serviceP.getAll().spliterator(), false)
-                .collect(Collectors.toList());
+    @RequestMapping(value = "/index")
+    public String index() {
+        log.info("GetMap index method 23");
+        return "index";
     }
 
-    @GetMapping("/{id}")
-    public ResponseEntity<Person> findById(@PathVariable long id) {
-        var person = this.serviceP.getById(id);
-        return new ResponseEntity<>(person.orElse(new Person())
-                , person.isPresent() ? HttpStatus.OK : HttpStatus.NOT_FOUND);
+    @RequestMapping(value = {"/enterRoom1"}, method = RequestMethod.GET)
+    public String enterRoom1() {
+        log.info("Get Room1 29");
+        return "room1";
     }
+
+    @RequestMapping(value = {"/enterRoom2"}, method = RequestMethod.GET)
+    public String enterRoom2() {
+        log.info("Get Room2 35");
+        return "room2";
+    }
+
+//    @GetMapping("/")
+//    public List<Person> findAll() {
+//        return StreamSupport.stream(this.serviceP.getAll().spliterator(), false)
+//                .collect(Collectors.toList());
+//    }
+//
+//    @GetMapping("/{id}")
+//    public ResponseEntity<Person> findById(@PathVariable long id) {
+//        var person = this.serviceP.getById(id);
+//        return new ResponseEntity<>(person.orElse(new Person())
+//                , person.isPresent() ? HttpStatus.OK : HttpStatus.NOT_FOUND);
+//    }
 
 }
