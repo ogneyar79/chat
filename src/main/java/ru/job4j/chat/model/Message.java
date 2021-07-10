@@ -8,13 +8,14 @@ public class Message {
     // автор сообщения должно быть уникальным, если null - автор сервер
     public String userName;
     // время сообщения
-    public Timestamp createTime;
+    public Timestamp dataCreated;
     // текст сообщения
     public String report = "";
 
 
 
     public Message() {
+
     }
 
     public Long getId() {
@@ -33,12 +34,12 @@ public class Message {
         this.userName = userName;
     }
 
-    public Timestamp getCreateTime() {
-        return createTime;
+    public Timestamp getDataCreated() {
+        return dataCreated;
     }
 
-    public void setCreateTime(Timestamp createTime) {
-        this.createTime = createTime;
+    public void setDataCreated(Timestamp dataCreated) {
+        this.dataCreated = dataCreated;
     }
 
     public String getReport() {

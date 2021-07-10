@@ -8,30 +8,105 @@
           integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
     <title>Room2</title>
     <style type="text/css"></style>
+    <script src="https://code.jquery.com/jquery-3.4.1.min.js"></script>
+    <script src="https://code.jquery.com/jquery-1.12.4.js"></script>
+    <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
+    <!-- Optional JavaScript -->
+    <!-- jQuery first, then Popper.js, then Bootstrap JS -->
+    <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js"
+            integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN"
+            crossorigin="anonymous"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js"
+            integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q"
+            crossorigin="anonymous"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js"
+            integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl"
+            crossorigin="anonymous"></script>
+    <script src="//ajax.googleapis.com/ajax/libs/jquery/1.10.2/jquery.min.js"></script>
+
+    <link rel="stylesheet" href="//code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">
+
+    <script type="text/javascript">
+
+        function showMessage() {
+            $.get('/get_mes', function (data) {
+                //            var jsonData = $.parseJSON(data);
+                //         console.log(jsonData + "Json turn into ");
+                console.log("Beginining of work function $.get")
+                let chatmessage = "<div class='chat-view'>";
+                for (var i = 0; i < data.length; i++) {
+                    console.log(data[i]);
+                    chatmessage = chatmessage + "<div class=\"chat-item\">\n" +
+                        "                    <div class=\"d-flex\">\n" +
+                        "                        <div class=\"p-1\">\n" +
+                        "                            <div class=\"d-flex align-items-end\">\n" +
+                        "                                <div class=\"sender-name\">" + data[i].userName + "</div>\n<div class=\'chat-time\'>" + data[i].userName + "</div>\n</div>\n" +
+                        "                            <div class=\"float-right\">\n" +
+                        "                            </div>\n <div class=\"chat-text\">\n" + data[i].report +
+                        "                            </div>\n" +
+                        "                        </div>\n" +
+                        "                    </div>\n" +
+                        "                </div>";
+                }
+                chatmessage = chatmessage + "</div>";
+                $("#chatview").html(chatmessage);
+                console.log("End of work function $.get")
+            });
+        }
+
+        // $(document).ready(function () {
+        //     showMessage();
+        // });
+
+        // $(document).ready(function () {
+        //     $.get('/mes', function (data) {
+        //         console.log(data)
+        //         let testTable = " <table border='1'>" +
+        //             "<tr><td>" + data.id + "</td><td>" + data.report + "</td> <td>" + data.dataCreated + "</td></tr>"+
+        //         "</table>";
+        //
+        //         $("#testH1").html(testTable);
+        //     })
+        // });
+
+        function sendMessage() {
+            //         const msg = $('#ajaxmessage').serialize();
+            console.log(" I want start ajax")
+            const msg = JSON.stringify({
+                userName: $("#userName").val(),
+                report: $("#report").val(),
+            })
+            console.log(msg.toString());
+            $.ajax({
+                type: 'POST',
+                cache: false,
+                url: 'http://localhost:8080/message',
+                contentType: "application/json",
+                dataType: 'json',
+                data: msg,
+                success: function () {
+                    console.log(" 89 Data sent");
+                    showMessage();
+                }
+            })
+        }
+
+        window.onload = function () {
+            console.log(" function window.onload = 96 function () show message")
+            document.getElementById("button-addon2").addEventListener("click", sendMessage);
+            document.getElementById("button-addon2").addEventListener("click", showMessage);
+            showMessage();
+        }
+
+        function handler2() {
+            alert('Мы схватили кнопку с id button-addon2 готовы к ajax send message to server');
+            console.log("Thanks");
+        }
+
+    </script>
 </head>
 <body class="body">
-<script src="https://code.jquery.com/jquery-3.4.1.min.js"></script>
-<script>
-    function sendMessage() {
-
-        var msg   = $('#ajax_form_message').serialize();
-        $.ajax({
-            type: 'Post',
-            url: 'http://localhost:8080/job4j_Ajax/message',
-
-            data: msg,
-            dataType: 'html'
-        }).done(function (data) {
-            console.log(data)
-        }).fail(function (err) {
-            alert(err);
-        });
-    }
-
-    ajax_form_message.addEventListener("click", sendMessage(), true);
-
-</script>
-<h1></h1>
+<div th:id="testH1"> Test H1 Heading</div>
 <div>
     <table border="1">
         <thead>
@@ -51,90 +126,26 @@
 
 <section class="main-wrapper">
     <div class="cgl-live-chat">
-        <div class="chat-wrapper">
-            <div class="chat-title">
-                Live Chat
-            </div>
-            <div class="chat-view">
+        <div class="chat-title">
+            Live Chat
+        </div>
 
-                <div class="chat-item">
-                    <div class="d-flex">
-                        <img src="https://image.freepik.com/free-vector/gamer-logo_43901-59.jpg" alt="">
-                        <div class="p-1">
-                            <div class="d-flex align-items-end">
-                                <div class="sender-name"><a href="#">#Surya Prakash</a></div>
-                                <div class="chat-time">09:54 24/05/21</div>
-                            </div>
-                            <div class="float-right">
-                                <button type="button" class="dropdown-btn btn-tr p-2" data-toggle="dropdown"
-                                        aria-haspopup="true" aria-expanded="false">
-                                    <i class="fas fa-ellipsis-v"></i>
-                                </button>
-                                <div class="dropdown-menu">
-                                    <!-- Dropdown menu links -->
-                                    <a class="dropdown-item" href="#">Report</a>
-                                    <a class="dropdown-item" href="#">Block</a>
-                                </div>
-                            </div>
-                            <div class="chat-text">
-                                Hello guys! lets get into the party
-                            </div>
-                        </div>
-                    </div>
-                </div>
+        <div class="chat-wrapper" th:id="chatview">
 
-
-                <div class="chat-item">
-                    <div class="d-flex">
-                        <img src="https://image.freepik.com/free-vector/gamer-logo_43901-59.jpg" alt="">
-                        <div class="p-1">
-                            <div class="d-flex align-items-end">
-                                <div class="sender-name"><a href="#">#Surya Prakash</a></div>
-                                <div class="chat-time">09:54 24/05/21</div>
-                            </div>
-                            <div class="float-right">
-                                <button type="button" class="dropdown-btn btn-tr p-2" data-toggle="dropdown"
-                                        aria-haspopup="true" aria-expanded="false">
-                                    <i class="fas fa-ellipsis-v"></i>
-                                </button>
-                                <div class="dropdown-menu">
-                                    <!-- Dropdown menu links -->
-                                    <a class="dropdown-item" href="#">Report</a>
-                                    <a class="dropdown-item" href="#">Block</a>
-                                </div>
-                            </div>
-                            <div class="chat-text">
-                                Sample Message text
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-
-
-            <form th:action="@{/message}" th:object="${message}" id="ajax_form_message" method="post">
-                <input type="hidden" th:field="*{userName}" th:value="${user.getName()}" id="userName">
-
-                <input type="text" th:field="*{report}" id="report" placeholder="Type something...">
-                <button class="" type="button" id="button-addon2">
-                    <img src="https://github.com/suryavmds/Live-chat-HTML-design--like-YT-chat-/blob/master/assets/img/send-btn.svg?raw=true"
-                         alt="">
-                </button>
-            </form>
-
-            <div class="chat-message">
-                <form action="#">
-                    <div class="input-group align-items-center">
-                        <input type="text" class="form-control" placeholder="Type something...">
-                        <div class="input-group-append">
-                            <button class="" type="button" id="button-addon3">
-                                <img src="https://github.com/suryavmds/Live-chat-HTML-design--like-YT-chat-/blob/master/assets/img/send-btn.svg?raw=true"
-                                     alt="">
-                            </button>
-                        </div>
-                    </div>
+        </div>
+        <div>
+            <div th:class="chat-message">
+                <form th:action="@{/message}" th:object="${message}" id="ajaxmessage" method="post">
+                    <input type="hidden" th:field="*{userName}" th:value="${user.getName()}" id="userName">
+                    <input type="text" th:field="*{report}" id="report" placeholder="Type something...">
+                    <button class="" type="button" id="button-addon2">
+                        <img src="https://github.com/suryavmds/Live-chat-HTML-design--like-YT-chat-/blob/master/assets/img/send-btn.svg?raw=true"
+                             alt="">
+                    </button>
                 </form>
             </div>
+
+
         </div>
     </div>
 </section>

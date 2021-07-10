@@ -1,9 +1,12 @@
 package ru.job4j.chat.model;
 
+import org.springframework.stereotype.Repository;
+
 import java.sql.Timestamp;
 import java.util.ArrayList;
 import java.util.List;
 
+@Repository
 public class Room {
 
     private long id;
@@ -21,10 +24,14 @@ public class Room {
             messages = new ArrayList<>();
             Message message = new Message();
             message.setUserName("Robot");
-            message.setCreateTime(new Timestamp(System.currentTimeMillis()));
+            message.setDataCreated(new Timestamp(System.currentTimeMillis()));
             message.setReport("Chat start");
             messages.add(message);
         }
+    }
+
+    public List<Message> findMessage() {
+        return this.messages;
     }
 
     public Person addPersonToRoom(Person person) {
@@ -36,4 +43,5 @@ public class Room {
         this.messages.add(message);
         return message;
     }
+
 }

@@ -2,6 +2,7 @@ package ru.job4j.chat.controller;
 
 
 import lombok.RequiredArgsConstructor;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Controller;
@@ -20,6 +21,7 @@ import java.util.logging.Logger;
 @RequiredArgsConstructor
 public class FirstController {
 
+    @Autowired
     private final IPersonService serviceP;
     private static Logger log = Logger.getLogger(FirstController.class.getName());
 
@@ -50,7 +52,6 @@ public class FirstController {
         //  model.addAttribute("user", SecurityContextHolder.getContext().getAuthentication().getPrincipal());
         model.addAttribute("user", new Person("Robert", "r@mail.ru", "12345"));
         model.addAttribute("message", new Message());
-        log.info("Get Room2 52");
         return "room2";
     }
 
