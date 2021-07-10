@@ -3,6 +3,8 @@ package ru.job4j.chat.controller;
 
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import ru.job4j.chat.model.Message;
 import ru.job4j.chat.services.MessageService;
@@ -21,13 +23,16 @@ public class MessageController {
     private MessageService messageService;
 
     @RequestMapping(method = RequestMethod.POST, value = {"/message"})
-    public void saveMessageToChat(@RequestBody Message m) {
-        log.info(" try to get message from user and send to chat 24 ");
+    public ResponseEntity<Message> saveMessageToChat(@RequestBody Message m) {
         m.setId(0L);
         m.setDataCreated(new Timestamp(System.currentTimeMillis()));
         log.info(" We got message from ajax:" + m + "27;");
-        messageService.save(m);
-        log.info(" We try to get all message saveMethodToChat from base size 30:" +   messageService.findAllMessage().size());
+        Message rsl = messageService.save(m);
+        log.info(" We try to get all message saveMethodToChat from base size 30:" + messageService.findAllMessage().size());
+        return new ResponseEntity<>(
+                rsl,
+                HttpStatus.OK
+        );
     }
 
     @RequestMapping(method = RequestMethod.GET, value = {"/mes"})
@@ -44,7 +49,7 @@ public class MessageController {
     @RequestMapping(method = RequestMethod.GET, value = {"/get_mes"})
     public List<Message> getAllMessage() {
         log.info("Get All Message 42");
-        log.info(" We try to get all message from base size 53:" +   messageService.findAllMessage().size());
+        log.info(" We try to get all message from base size 53:" + messageService.findAllMessage().size());
         return messageService.findAllMessage();
     }
 
