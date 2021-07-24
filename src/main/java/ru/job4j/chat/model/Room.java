@@ -12,7 +12,7 @@ public class Room {
     private long id;
     private String name;
 
-    public List<Person> users;  // Все пользователи чата
+    public List<User> users;  // Все пользователи чата
 
     public List<Message> messages; // все сообщения
 
@@ -34,9 +34,9 @@ public class Room {
         return this.messages;
     }
 
-    public Person addPersonToRoom(Person person) {
-        this.users.add(person);
-        return person;
+    public User addPersonToRoom(User user) {
+        this.users.add(user);
+        return user;
     }
 
     public Message addMessageToRoom(Message message) {

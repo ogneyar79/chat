@@ -3,14 +3,12 @@ package ru.job4j.chat.controller;
 
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.security.core.Authentication;
-import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import ru.job4j.chat.model.Message;
-import ru.job4j.chat.model.Person;
+import ru.job4j.chat.model.User;
 import ru.job4j.chat.services.IPersonService;
 
 import java.text.SimpleDateFormat;
@@ -28,13 +26,18 @@ public class FirstController {
     @RequestMapping(value = "/")
     public String index(Model model) {
         log.info("GetMap index method 23");
-        model.addAttribute("zlata", new Person("Zlata", "z@mail.ru", "12345"));
+        User user1= new User();
+        user1.setFirstName("Zlata");
+        user1.setLastName("Ivanova");
+        user1.setEmail( "z@mail.ru");
+        user1.setPassword("12345");
+        model.addAttribute("zlata", user1);
         SimpleDateFormat format = new SimpleDateFormat("yyyy-MM-dd");
 
         String dateString = format.format(new Date());
         model.addAttribute("serverTime", dateString);
-        Person person = (Person) model.getAttribute("zlata");
-        log.info("GetMap ipersonzlata 35 :" + person.getName());
+        User user = (User) model.getAttribute("zlata");
+        log.info("GetMap ipersonzlata 35 :" + user.getFirstName());
         //   Authentication auth = SecurityContextHolder.getContext().getAuthentication();
         return "index";
     }
@@ -50,7 +53,12 @@ public class FirstController {
     @RequestMapping(value = {"/enterRoom2"}, method = RequestMethod.GET)
     public String enterRoom2(Model model) {
         //  model.addAttribute("user", SecurityContextHolder.getContext().getAuthentication().getPrincipal());
-        model.addAttribute("user", new Person("Robert", "r@mail.ru", "12345"));
+        User user1= new User();
+        user1.setFirstName("Robert");
+        user1.setLastName("Ivanov");
+        user1.setEmail( "r@mail.ru");
+        user1.setPassword("12345");
+        model.addAttribute("user", user1);
         model.addAttribute("message", new Message());
         return "room2";
     }

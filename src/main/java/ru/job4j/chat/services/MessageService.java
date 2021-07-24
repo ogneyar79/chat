@@ -1,11 +1,8 @@
 package ru.job4j.chat.services;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.context.annotation.Bean;
-import org.springframework.stereotype.Repository;
 import org.springframework.stereotype.Service;
 import ru.job4j.chat.model.Message;
-import ru.job4j.chat.model.Person;
 import ru.job4j.chat.model.Room;
 
 import java.util.List;

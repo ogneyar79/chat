@@ -60,7 +60,7 @@
         <div>
             <div th:class="chat-message">
                 <form th:action="@{/message}" th:object="${message}" id="ajaxmessage" method="post">
-                    <input type="hidden" th:field="*{userName}" th:value="${user.getName()}" id="userName">
+                    <input type="hidden" th:field="*{userName}" th:value="${user.getFirstName()}" id="userName">
                     <input type="text" th:field="*{report}" id="report" placeholder="Type something...">
                     <button class="" type="button" id="button-addon2">
                         <img src="https://github.com/suryavmds/Live-chat-HTML-design--like-YT-chat-/blob/master/assets/img/send-btn.svg?raw=true"

@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+
+<head>
+    <meta charset="UTF-8">
+    <link rel="stylesheet" type="text/css" th:href="@{/style.css}"/>
+    <title>Spring Boot Application</title>
+</head>
+<body>
+
+<h1 th:text="${userForm}">REGISTRATION </h1>
+
+
+<br/><br/>
+
+<div>
+    <div th:class="registration">
+        <form th:action="@{/registration}" th:object="${userForm}" id="user" method="post">
+            <div>
+                <input type="text" th:field="*{firstName}" id="userName" placeholder="Type Your Name..."/>
+                <p th:if="${#fields.hasErrors('firstName')}">Invalid Name</p>
+            </div>
+            <div>
+                <input type="text" th:field="*{lastName}" id="lastName" placeholder="Type Last Name..."/>
+                <p th:if="${#fields.hasErrors('lastName)}" th:errorclass="error" th:errors="*{lastName}"/>
+            </div>
+            <div>
+                <label for="email">Email</label>
+                <input type="text" th:field="*{email}" id="email" placeholder="Type your email name@example.com">
+                <p th:if="${#fields.hasErrors('email')}" th:errorclass="error" th:errors="*{email}"/>
+            </div>
+            <div><input type="text" th:field="*{password}" id="password" placeholder="Create Your Password..."/>
+                <p th:if="${#fields.hasErrors('password')}" th:errorclass="error" th:errors="*{password}"/>
+            </div>
+            <br/><br/>
+            <button class="" type="submit"> Регистрация
+                <img src="https://github.com/suryavmds/Live-chat-HTML-design--like-YT-chat-/blob/master/assets/img/send-btn.svg?raw=true"
+                     alt="">
+            </button>
+        </form>
+        <a href="/">Главная</a>
+    </div>
+</div>
+
+</body>
+
+</html>

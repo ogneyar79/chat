@@ -1,17 +1,19 @@
 package ru.job4j.chat.services;
 
-import ru.job4j.chat.model.Person;
+import ru.job4j.chat.model.User;
 import ru.job4j.chat.model.Role;
 
 import java.util.Optional;
 
 public interface IPersonService {
 
-    Iterable<Person> getAll();
+    Iterable<User> getAll();
 
-    Optional<Person> getById(Long id);
-    Person save(Person person);
+    User getById(Long id);
 
-    Person savePersonWithRole(Person p, Role r);
+    public boolean deleteUser(Long userId);
+    boolean save(User user);
+
+    User savePersonWithRole(User p, Role r);
 
 }
